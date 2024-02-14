@@ -9,7 +9,7 @@ load_dotenv()
 
 # Access the properties from the .env file
 INPUT_CSV_FILE = os.getenv("INPUT_CSV_FILE")
-OUTPUT_FILE = os.getenv("OUTPUT_FILE")
+OUTPUT_FOLDER = os.getenv("OUTPUT_FOLDER")
 
 
 def process():
@@ -30,9 +30,9 @@ def process():
 
     # Write DataFrame as Parquet files partitioned by customer_id and timestamp
     df.write.partitionBy("user_id", "timestamp") \
-        .parquet(output_path, mode="overwrite")
+        .parquet(OUTPUT_FOLDER, mode="overwrite")
 
     # Stop SparkSession
     spark.stop()
 
-    print("Parquet files have been created in the 'assets/output' folder.")
+    print(f"Parquet files have been created in the '{OUTPUT_FOLDER}' folder.")
